@@ -8,7 +8,7 @@ Eclipse配置: Window -> Preferences -> General -> Workspace -> Text file encodi
 	开发语言 	JAVA
 	IOC容器		Spring
 	Web框架		SpringMVC
-	ORM框架 		Hibernate
+	ORM框架 		MyBatis
 	数据库系统 	MySQL
 	数据库连接 	JDBC
 	数据库连接池	C3P0

@@ -1,14 +1,5 @@
 package com.huifu.auth.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
-@Entity
-@Table(name = "user", catalog = "autodesk")
 public class User {
 
 	private long id;
@@ -49,8 +40,6 @@ public class User {
 		this.modifiedTime = modifiedTime;
 	}
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
 	public long getId() {
 		return id;
 	}
@@ -59,7 +48,6 @@ public class User {
 		this.id = id;
 	}
 
-	@Column
 	public String getName() {
 		return name;
 	}
@@ -68,7 +56,6 @@ public class User {
 		this.name = name;
 	}
 
-	@Column
 	public int getGender() {
 		return gender;
 	}
@@ -77,7 +64,6 @@ public class User {
 		this.gender = gender;
 	}
 
-	@Column
 	public String getBirthday() {
 		return birthday;
 	}
@@ -86,7 +72,6 @@ public class User {
 		this.birthday = birthday;
 	}
 
-	@Column
 	public String getIdentityNo() {
 		return identityNo;
 	}
@@ -95,7 +80,6 @@ public class User {
 		this.identityNo = identityNo;
 	}
 
-	@Column
 	public String getMobile() {
 		return mobile;
 	}
@@ -104,7 +88,6 @@ public class User {
 		this.mobile = mobile;
 	}
 
-	@Column
 	public String getTel() {
 		return tel;
 	}
@@ -113,7 +96,6 @@ public class User {
 		this.tel = tel;
 	}
 
-	@Column
 	public int getStatus() {
 		return status;
 	}
@@ -122,7 +104,6 @@ public class User {
 		this.status = status;
 	}
 
-	@Column
 	public String getCreateTime() {
 		return createTime;
 	}
@@ -131,7 +112,6 @@ public class User {
 		this.createTime = createTime;
 	}
 
-	@Column
 	public String getModifiedTime() {
 		return modifiedTime;
 	}

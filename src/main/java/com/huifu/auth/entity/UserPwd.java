@@ -1,12 +1,5 @@
 package com.huifu.auth.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
-@Entity
-@Table(name = "user_pwd", catalog = "autodesk")
 public class UserPwd {
 
 	private long uid; /* 用户代号 */
@@ -32,7 +25,6 @@ public class UserPwd {
 		this.modifiedTime = modifiedTime;
 	}
 
-	@Id
 	public long getUid() {
 		return uid;
 	}
@@ -41,7 +33,6 @@ public class UserPwd {
 		this.uid = uid;
 	}
 
-	@Column
 	public String getLoginId() {
 		return loginId;
 	}
@@ -50,7 +41,6 @@ public class UserPwd {
 		this.loginId = loginId;
 	}
 
-	@Column
 	public String getPasswd() {
 		return passwd;
 	}
@@ -59,7 +49,6 @@ public class UserPwd {
 		this.passwd = passwd;
 	}
 
-	@Column
 	public String getModifiedUid() {
 		return modifiedUid;
 	}
@@ -68,7 +57,6 @@ public class UserPwd {
 		this.modifiedUid = modifiedUid;
 	}
 
-	@Column
 	public String getModifiedTime() {
 		return modifiedTime;
 	}
