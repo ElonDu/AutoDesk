@@ -1,22 +1,21 @@
 package com.huifu.auth.entity;
 
 public class UserPwd {
+	private Long uid;
 
-	private long uid; /* 用户代号 */
+	private String loginId;
 
-	private String loginId; /* 登录账号 */
+	private String passwd;
 
-	private String passwd; /* 密码 */
+	private Long modifiedUid;
 
-	private String modifiedUid; /* 更新者的用户代号 */
-
-	private String modifiedTime; /* 更新时间 */
+	private String modifiedTime;
 
 	public UserPwd() {
-		// Default.
+		super();
 	}
 
-	public UserPwd(long uid, String loginId, String passwd, String modifiedUid, String modifiedTime) {
+	public UserPwd(Long uid, String loginId, String passwd, Long modifiedUid, String modifiedTime) {
 		super();
 		this.uid = uid;
 		this.loginId = loginId;
@@ -25,11 +24,11 @@ public class UserPwd {
 		this.modifiedTime = modifiedTime;
 	}
 
-	public long getUid() {
+	public Long getUid() {
 		return uid;
 	}
 
-	public void setUid(long uid) {
+	public void setUid(Long uid) {
 		this.uid = uid;
 	}
 
@@ -38,7 +37,7 @@ public class UserPwd {
 	}
 
 	public void setLoginId(String loginId) {
-		this.loginId = loginId;
+		this.loginId = loginId == null ? null : loginId.trim();
 	}
 
 	public String getPasswd() {
@@ -46,14 +45,14 @@ public class UserPwd {
 	}
 
 	public void setPasswd(String passwd) {
-		this.passwd = passwd;
+		this.passwd = passwd == null ? null : passwd.trim();
 	}
 
-	public String getModifiedUid() {
+	public Long getModifiedUid() {
 		return modifiedUid;
 	}
 
-	public void setModifiedUid(String modifiedUid) {
+	public void setModifiedUid(Long modifiedUid) {
 		this.modifiedUid = modifiedUid;
 	}
 
@@ -62,13 +61,6 @@ public class UserPwd {
 	}
 
 	public void setModifiedTime(String modifiedTime) {
-		this.modifiedTime = modifiedTime;
+		this.modifiedTime = modifiedTime == null ? null : modifiedTime.trim();
 	}
-
-	@Override
-	public String toString() {
-		return "UserPwd [uid=" + uid + ", loginId=" + loginId + ", passwd=" + passwd + ", modifiedUid=" + modifiedUid
-				+ ", modifiedTime=" + modifiedTime + "]";
-	}
-
 }

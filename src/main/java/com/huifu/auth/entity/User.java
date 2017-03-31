@@ -1,33 +1,32 @@
 package com.huifu.auth.entity;
 
 public class User {
+	private Long id;
 
-	private long id;
+	private String name;
 
-	private String name; /* 姓名 */
+	private Integer gender;
 
-	private int gender; /* 性别 */
+	private String birthday;
 
-	private String birthday; /* 出生日期 */
+	private String identityNo;
 
-	private String identityNo; /* 身份证号码 */
+	private String mobile;
 
-	private String mobile; /* 手机号码 */
+	private String tel;
 
-	private String tel; /* 固定电话 */
+	private Integer status;
 
-	private int status; /* 状态 */
+	private String createTime;
 
-	private String createTime; /* 创建时间 */
-
-	private String modifiedTime; /* 更新时间 */
+	private String modifiedTime;
 
 	public User() {
-		// Default.
+		super();
 	}
 
-	public User(String name, int gender, String birthday, String identityNo, String mobile, String tel, int status,
-			String createTime, String modifiedTime) {
+	public User(String name, Integer gender, String birthday, String identityNo, String mobile, String tel,
+			Integer status, String createTime, String modifiedTime) {
 		super();
 		this.name = name;
 		this.gender = gender;
@@ -40,11 +39,11 @@ public class User {
 		this.modifiedTime = modifiedTime;
 	}
 
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -53,14 +52,14 @@ public class User {
 	}
 
 	public void setName(String name) {
-		this.name = name;
+		this.name = name == null ? null : name.trim();
 	}
 
-	public int getGender() {
+	public Integer getGender() {
 		return gender;
 	}
 
-	public void setGender(int gender) {
+	public void setGender(Integer gender) {
 		this.gender = gender;
 	}
 
@@ -69,7 +68,7 @@ public class User {
 	}
 
 	public void setBirthday(String birthday) {
-		this.birthday = birthday;
+		this.birthday = birthday == null ? null : birthday.trim();
 	}
 
 	public String getIdentityNo() {
@@ -77,7 +76,7 @@ public class User {
 	}
 
 	public void setIdentityNo(String identityNo) {
-		this.identityNo = identityNo;
+		this.identityNo = identityNo == null ? null : identityNo.trim();
 	}
 
 	public String getMobile() {
@@ -85,7 +84,7 @@ public class User {
 	}
 
 	public void setMobile(String mobile) {
-		this.mobile = mobile;
+		this.mobile = mobile == null ? null : mobile.trim();
 	}
 
 	public String getTel() {
@@ -93,14 +92,14 @@ public class User {
 	}
 
 	public void setTel(String tel) {
-		this.tel = tel;
+		this.tel = tel == null ? null : tel.trim();
 	}
 
-	public int getStatus() {
+	public Integer getStatus() {
 		return status;
 	}
 
-	public void setStatus(int status) {
+	public void setStatus(Integer status) {
 		this.status = status;
 	}
 
@@ -109,7 +108,7 @@ public class User {
 	}
 
 	public void setCreateTime(String createTime) {
-		this.createTime = createTime;
+		this.createTime = createTime == null ? null : createTime.trim();
 	}
 
 	public String getModifiedTime() {
@@ -117,14 +116,6 @@ public class User {
 	}
 
 	public void setModifiedTime(String modifiedTime) {
-		this.modifiedTime = modifiedTime;
+		this.modifiedTime = modifiedTime == null ? null : modifiedTime.trim();
 	}
-
-	@Override
-	public String toString() {
-		return "User [id=" + id + ", name=" + name + ", gender=" + gender + ", birthday=" + birthday + ", identityNo="
-				+ identityNo + ", mobile=" + mobile + ", tel=" + tel + ", status=" + status + ", createTime="
-				+ createTime + ", modifiedTime=" + modifiedTime + "]";
-	}
-
 }

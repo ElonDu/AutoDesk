@@ -3,38 +3,38 @@ package com.huifu.auth.support;
 public class UserVO {
 
 	/** ------------------------- */
-	private long id;
+	private Long id;
 
-	private String name; /* 姓名 */
+	private String name;
 
-	private int gender; /* 性别 */
+	private Integer gender;
 
-	private String birthday; /* 出生日期 */
+	private String birthday;
 
-	private String identityNo; /* 身份证号码 */
+	private String identityNo;
 
-	private String mobile; /* 手机号码 */
+	private String mobile;
 
-	private String tel; /* 固定电话 */
+	private String tel;
 
-	private int status; /* 状态 */
+	private Integer status;
 
-	private String createTime; /* 创建时间 */
-
-	private String modifiedTime; /* 更新时间 */
+	private String createTime;
 
 	/** ------------------------- */
-	private String loginId; /* 登录账号 */
+	private String loginId;
 
-	private String passwd; /* 密码 */
+	private String passwd;
 
-	private String modifiedUid; /* 更新者的用户代号 */
+	private Long modifiedUid;
 
-	public long getId() {
+	private String modifiedTime;
+
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -46,11 +46,11 @@ public class UserVO {
 		this.name = name;
 	}
 
-	public int getGender() {
+	public Integer getGender() {
 		return gender;
 	}
 
-	public void setGender(int gender) {
+	public void setGender(Integer gender) {
 		this.gender = gender;
 	}
 
@@ -86,11 +86,11 @@ public class UserVO {
 		this.tel = tel;
 	}
 
-	public int getStatus() {
+	public Integer getStatus() {
 		return status;
 	}
 
-	public void setStatus(int status) {
+	public void setStatus(Integer status) {
 		this.status = status;
 	}
 
@@ -100,14 +100,6 @@ public class UserVO {
 
 	public void setCreateTime(String createTime) {
 		this.createTime = createTime;
-	}
-
-	public String getModifiedTime() {
-		return modifiedTime;
-	}
-
-	public void setModifiedTime(String modifiedTime) {
-		this.modifiedTime = modifiedTime;
 	}
 
 	public String getLoginId() {
@@ -126,12 +118,20 @@ public class UserVO {
 		this.passwd = passwd;
 	}
 
-	public String getModifiedUid() {
+	public Long getModifiedUid() {
 		return modifiedUid;
 	}
 
-	public void setModifiedUid(String modifiedUid) {
+	public void setModifiedUid(Long modifiedUid) {
 		this.modifiedUid = modifiedUid;
+	}
+
+	public String getModifiedTime() {
+		return modifiedTime;
+	}
+
+	public void setModifiedTime(String modifiedTime) {
+		this.modifiedTime = modifiedTime;
 	}
 
 }

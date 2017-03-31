@@ -9,17 +9,23 @@ import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.orm.hibernate4.HibernateTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.huifu.auth.dao.UserMapper;
+import com.huifu.auth.dao.UserPwdMapper;
 import com.huifu.auth.entity.User;
 import com.huifu.auth.entity.UserPwd;
+import com.huifu.auth.entity.UserPwdExample;
+import com.huifu.auth.service.SeqCtlService;
 import com.huifu.auth.service.UserService;
-import com.huifu.auth.support.AuthConstants;
+import com.huifu.auth.support.SequenceConstants;
+import com.huifu.auth.support.SystemConstants;
 import com.huifu.auth.support.UserVO;
 import com.huifu.core.util.DateUtils;
+import com.huifu.core.util.StringUtils;
 
 @Service("userService")
 public class UserServiceImpl implements UserService {
@@ -27,10 +33,32 @@ public class UserServiceImpl implements UserService {
 	private final static Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
 
 	@Autowired
-	private HibernateTemplate hibernateTemplate;
+	private UserMapper userMapper;
+
+	@Autowired
+	private UserPwdMapper userPwdMapper;
+
+	@Autowired
+	private SeqCtlService seqCtlService;
 
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
+
+	/**
+	 * Generate User Identity from SEQ_CTL.
+	 * 
+	 * @param instId
+	 * @return inst_id(6 bits) + user_sequence(8 bits)
+	 */
+	public long getUid(long instId) {
+		StringBuilder buff = new StringBuilder(20);
+		buff.append(instId);
+
+		long seqNo = seqCtlService.getSeqId(SequenceConstants.SEQID_USER, instId);
+		buff.append(StringUtils.leftPad("" + seqNo, 8, "0"));
+
+		return Long.parseLong(buff.toString());
+	}
 
 	@Transactional(propagation = Propagation.REQUIRED)
 	public void save(UserVO vo) {
@@ -38,15 +66,16 @@ public class UserServiceImpl implements UserService {
 		String currentTime = DateUtils.getCurrentDatetime();
 
 		User user = new User(vo.getName(), vo.getGender(), vo.getBirthday(), vo.getIdentityNo(), vo.getMobile(),
-				vo.getTel(), vo.getStatus(), currentDate, currentTime);
-		/*
-		 * Update the given persistent instance, associating it with the current
-		 * Hibernate Session.
-		 */
-		hibernateTemplate.save(user);
-
+				vo.getTel(), SystemConstants.ENABLE, currentDate, currentTime);
 		UserPwd userPwd = new UserPwd(user.getId(), vo.getLoginId(), vo.getPasswd(), vo.getModifiedUid(), currentTime);
-		hibernateTemplate.save(userPwd);
+		
+		long uid = getUid(SystemConstants.DEFAULT_INST_ID);
+		
+		user.setId(uid);
+		userPwd.setUid(uid);
+		
+		userMapper.insert(user);
+		userPwdMapper.insert(userPwd);
 	}
 
 	@Transactional(propagation = Propagation.REQUIRED)
@@ -56,29 +85,24 @@ public class UserServiceImpl implements UserService {
 		User user = new User(vo.getName(), vo.getGender(), vo.getBirthday(), vo.getIdentityNo(), vo.getMobile(),
 				vo.getTel(), vo.getStatus(), null, currentTime);
 
-		/*
-		 * Update the given persistent instance, associating it with the current
-		 * Hibernate Session.
-		 */
 		user.setId(vo.getId());
-		hibernateTemplate.update(user);
+		userMapper.updateByPrimaryKeySelective(user);
+
 	}
 
+	@Transactional(propagation = Propagation.REQUIRED)
 	public void remove(long id) {
 		User user = new User();
-		user.setStatus(AuthConstants.USER_STATUS_CLOSE);
-		/*
-		 * Update the given persistent instance, associating it with the current
-		 * Hibernate Session.
-		 */
 		user.setId(id);
-		hibernateTemplate.update(user);
+		user.setStatus(SystemConstants.DISABLE);
+		userMapper.updateByPrimaryKeySelective(user);
 	}
 
 	@SuppressWarnings("unchecked")
 	public boolean check(String loginId, String passwd) {
-		String hql = " from UserPwd where loginId = :loginId ";
-		List<UserPwd> list = (List<UserPwd>) hibernateTemplate.findByNamedParam(hql, "loginId", loginId);
+		UserPwdExample example = new UserPwdExample();
+		example.createCriteria().andLoginIdEqualTo(loginId);
+		List<UserPwd> list = userPwdMapper.selectByExample(example);
 		if (list.isEmpty()) {
 			logger.error(" the user_pwd(login_id=?) is not found. ", loginId);
 			return false;
@@ -99,7 +123,7 @@ public class UserServiceImpl implements UserService {
 
 	public UserVO queryById(long id) {
 		try {
-			User user = hibernateTemplate.load(User.class, id);
+			User user = userMapper.selectByPrimaryKey(id);
 
 			UserVO vo = new UserVO();
 			BeanUtils.copyProperties(user, vo);
